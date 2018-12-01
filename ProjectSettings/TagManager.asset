@@ -39,7 +39,7 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: New Layer
+  - name: Character
     uniqueID: 2398127941
     locked: 0
   - name: Default

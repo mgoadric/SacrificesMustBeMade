@@ -138,12 +138,12 @@ TextureImporter:
       name: characterAsset 1@4x_1
       rect:
         serializedVersion: 2
-        x: 118
-        y: 171
-        width: 99
-        height: 73
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 111
+        y: 164
+        width: 113
+        height: 80
+      alignment: 9
+      pivot: {x: 0.5, y: 0.54375}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -158,12 +158,12 @@ TextureImporter:
       name: characterAsset 1@4x_2
       rect:
         serializedVersion: 2
-        x: 249
-        y: 178
-        width: 87
-        height: 66
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 242.49998
+        y: 171
+        width: 101.000015
+        height: 73
+      alignment: 9
+      pivot: {x: 0.4950496, y: 0.5479452}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -178,12 +178,12 @@ TextureImporter:
       name: characterAsset 1@4x_3
       rect:
         serializedVersion: 2
-        x: 365
-        y: 165
-        width: 70
-        height: 79
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 358.00003
+        y: 158
+        width: 84
+        height: 86
+      alignment: 9
+      pivot: {x: 0.49999964, y: 0.5406977}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -198,12 +198,12 @@ TextureImporter:
       name: characterAsset 1@4x_4
       rect:
         serializedVersion: 2
-        x: 477
+        x: 472
         y: 0
-        width: 106
+        width: 116
         height: 244
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49999997}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -238,12 +238,12 @@ TextureImporter:
       name: characterAsset 1@4x_6
       rect:
         serializedVersion: 2
-        x: 103
+        x: 96
         y: 0
-        width: 43
-        height: 88
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 57
+        height: 95
+      alignment: 9
+      pivot: {x: 0.5, y: 0.46315792}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -258,12 +258,12 @@ TextureImporter:
       name: characterAsset 1@4x_7
       rect:
         serializedVersion: 2
-        x: 182
+        x: 176.49998
         y: 0
-        width: 97
-        height: 114
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 111.000015
+        height: 121
+      alignment: 9
+      pivot: {x: 0.48648652, y: 0.47107437}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -278,12 +278,12 @@ TextureImporter:
       name: characterAsset 1@4x_8
       rect:
         serializedVersion: 2
-        x: 297
+        x: 290
         y: 0
-        width: 139
-        height: 138
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 153
+        height: 145
+      alignment: 9
+      pivot: {x: 0.5, y: 0.47586206}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -305,6 +305,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 
+  userData: 636792972120000000
   assetBundleName: 
   assetBundleVariant: 
