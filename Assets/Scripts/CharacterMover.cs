@@ -7,6 +7,7 @@ public class CharacterMover : MonoBehaviour {
 	private Animator animator;
 	public float speed;
 	private bool forward;
+    public GameObject item;
 
 
 	// Use this for initialization
@@ -29,12 +30,13 @@ public class CharacterMover : MonoBehaviour {
 		if (Input.GetKeyDown(".")) {
             if (animator.GetBool("run"))
             {
-                Debug.Log("Testing");
+                Instantiate(item, transform.position + new Vector3(-1, 6.7f, 0), Quaternion.identity);
+                speed *= 1.01f;
             }
             animator.SetTrigger("run");
             if (!forward)
             {
-                speed *= -1;
+                speed = 0.1f;
                 Point(0, 0);
                 Vector3 pos = transform.position;
                 pos.x += 1f;
@@ -47,7 +49,7 @@ public class CharacterMover : MonoBehaviour {
             animator.SetTrigger("run");
             if (forward)
             {
-                speed *= -1;
+                speed = -0.1f;
                 Point(0, 180);
                 Vector3 pos = transform.position;
                 pos.x += -1f;
@@ -59,14 +61,16 @@ public class CharacterMover : MonoBehaviour {
 
 	void FixedUpdate() {
 		Vector3 pos = transform.position;
-		if (animator.GetCurrentAnimatorStateInfo(0).IsName("SkeletonWest")) {
-			pos.x -= speed;
-		} else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle")) {
+		if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle")) {
 			pos.x += speed;
             transform.position = pos;
-        } 
-		
-	}
+        }
+        else
+        {
+            speed = Mathf.Sign(speed) * 0.1f;
+        }
+
+    }
 
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Ground") {

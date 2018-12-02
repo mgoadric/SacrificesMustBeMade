@@ -7,6 +7,7 @@ public class SkeletonMover : MonoBehaviour {
 	private Animator animator;
 	public float speed;
 	private bool grounded;
+    private bool leftFoot;
 
 
 	// Use this for initialization
@@ -15,16 +16,18 @@ public class SkeletonMover : MonoBehaviour {
 		grounded = true;
 	}
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
 
 		
 		var horizontal = Input.GetAxis("Horizontal");
 
 		if (horizontal > 0) {
 			animator.SetInteger("direction", 1);
+            speed = 0.1f;
 		} else if (horizontal < 0) {
 			animator.SetInteger("direction", 3);
+            speed = 0.1f;
 		} 
 	
 

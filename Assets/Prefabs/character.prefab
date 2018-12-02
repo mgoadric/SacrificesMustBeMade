@@ -1065,6 +1065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  item: {fileID: 1331671471982396, guid: 5daab49937c684828a9b9e3f69b41778, type: 2}
 --- !u!114 &114252329902524118
 MonoBehaviour:
   m_ObjectHideFlags: 1
