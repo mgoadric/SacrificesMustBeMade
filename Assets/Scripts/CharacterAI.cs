@@ -6,23 +6,18 @@ public class CharacterAI : MonoBehaviour {
 
 	private Animator animator;
 	public float speed;
-	private bool forward;
     public GameObject item;
 
 
 	// Use this for initialization
 	void Start () {
 		animator = this.GetComponent<Animator>();
-        forward = true;
-        StartCoroutine("DoCheck");
+        StartRunning();
 	}
 
-    void Point(float zangle, float yangle)
+    void StartRunning()
     {
-        Vector3 eulerAngles = gameObject.transform.localEulerAngles;
-        eulerAngles.z = zangle;
-        eulerAngles.y = yangle;
-        transform.localRotation = Quaternion.Euler(eulerAngles);
+        StartCoroutine("DoCheck");
     }
 
     // Update is called once per frame
@@ -45,6 +40,7 @@ public class CharacterAI : MonoBehaviour {
         {
             animator.SetTrigger("run");
             yield return new WaitForSeconds(0.5f);
+            speed *= 1.002f;
         }
     }
 }

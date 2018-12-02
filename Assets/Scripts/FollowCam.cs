@@ -10,12 +10,15 @@ public class FollowCam : MonoBehaviour {
 
 	private float lBound;
 	private float rBound;
+    
+    AudioSource source;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		lBound = boundaryPercent * Camera.main.pixelWidth;
 		rBound = Camera.main.pixelWidth - lBound;
-	}
+        source = GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {

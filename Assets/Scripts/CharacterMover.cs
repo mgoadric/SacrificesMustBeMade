@@ -7,12 +7,18 @@ public class CharacterMover : MonoBehaviour {
 	private Animator animator;
 	public float speed;
 	private bool forward;
+    public int pressure;
     public GameObject item;
+    public AudioClip dropped;
+
+    AudioSource source;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		animator = this.GetComponent<Animator>();
+        source = GetComponent<AudioSource>();
+
         forward = true;
 	}
 
@@ -30,13 +36,22 @@ public class CharacterMover : MonoBehaviour {
 		if (Input.GetKeyDown(".")) {
             if (animator.GetBool("run"))
             {
-                Instantiate(item, transform.position + new Vector3(-1, 6.7f, 0), Quaternion.identity);
+                pressure++;
                 speed *= 1.01f;
             }
+
+            // Drop something
+            if (pressure > 30)
+            {
+                Instantiate(item, transform.position + new Vector3(-1, 6.7f, 0), Quaternion.identity);
+                source.PlayOneShot(dropped);
+            }
+
             animator.SetTrigger("run");
             if (!forward)
             {
                 speed = 0.1f;
+                pressure = 0;
                 Point(0, 0);
                 Vector3 pos = transform.position;
                 pos.x += 1f;
@@ -50,6 +65,7 @@ public class CharacterMover : MonoBehaviour {
             if (forward)
             {
                 speed = -0.1f;
+                pressure = 0;
                 Point(0, 180);
                 Vector3 pos = transform.position;
                 pos.x += -1f;
