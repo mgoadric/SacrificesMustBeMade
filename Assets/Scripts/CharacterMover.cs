@@ -9,7 +9,8 @@ public class CharacterMover : MonoBehaviour {
 	private bool forward;
     public int pressure;
     public GameObject item;
-    public AudioClip dropped;
+    public int items = 3;
+    public AudioClip breathing;
 
     AudioSource source;
 
@@ -40,11 +41,17 @@ public class CharacterMover : MonoBehaviour {
                 speed *= 1.01f;
             }
 
+            if (pressure % 14 == 1)
+            {
+                source.PlayOneShot(breathing);
+                pressure++;
+            }
+
             // Drop something
-            if (pressure > 30)
+            if (pressure > 30 && Random.Range(0.0f, 1.0f) < (0.1 + (pressure - 30) * 0.05) && items > 0)
             {
                 Instantiate(item, transform.position + new Vector3(-1, 6.7f, 0), Quaternion.identity);
-                source.PlayOneShot(dropped);
+                items--;
             }
 
             animator.SetTrigger("run");
@@ -77,20 +84,34 @@ public class CharacterMover : MonoBehaviour {
 
 	void FixedUpdate() {
 		Vector3 pos = transform.position;
-		if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle")) {
-			pos.x += speed;
-            transform.position = pos;
-        }
-        else
+        if (pos.x > -7)
         {
-            speed = Mathf.Sign(speed) * 0.1f;
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle"))
+            {
+                pos.x += speed;
+                transform.position = pos;
+                if (!source.isPlaying)
+                {
+                    source.Play();
+                }
+            }
+            else
+            {
+                source.Stop();
+                speed = Mathf.Sign(speed) * 0.1f;
+            }
         }
 
     }
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		if (coll.gameObject.tag == "Ground") {
-			//grounded = true;
+		if (coll.gameObject.tag == "Item") {
+            Item itemhit = coll.collider.gameObject.GetComponent<Item>();
+            if (itemhit.grounded)
+            {
+                items++;
+                Destroy(coll.collider.gameObject);
+            }
 		}
 	}
 }

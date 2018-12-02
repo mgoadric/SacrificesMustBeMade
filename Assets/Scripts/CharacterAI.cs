@@ -7,11 +7,16 @@ public class CharacterAI : MonoBehaviour {
 	private Animator animator;
 	public float speed;
     public GameObject item;
+    public AudioClip scream;
+
+    AudioSource source;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		animator = this.GetComponent<Animator>();
+        source = GetComponent<AudioSource>();
+
         StartRunning();
 	}
 
@@ -41,6 +46,18 @@ public class CharacterAI : MonoBehaviour {
             animator.SetTrigger("run");
             yield return new WaitForSeconds(0.5f);
             speed *= 1.002f;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "Character")
+        {
+            source.PlayOneShot(scream);
+        }
+        else if (coll.gameObject.tag == "Item")
+        {
+            Destroy(coll.gameObject);
         }
     }
 }
