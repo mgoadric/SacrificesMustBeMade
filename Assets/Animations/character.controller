@@ -151,7 +151,7 @@ AnimatorState:
   m_PrefabInternal: {fileID: 0}
   m_Name: CharacterRight
   m_Speed: 1
-  m_CycleOffset: 0
+  m_CycleOffset: 0.5
   m_Transitions:
   - {fileID: 1101093795166505802}
   - {fileID: 1101021577152204138}
@@ -178,7 +178,7 @@ AnimatorState:
   m_PrefabInternal: {fileID: 0}
   m_Name: CharacterAnimation
   m_Speed: 1
-  m_CycleOffset: 0
+  m_CycleOffset: 0.5
   m_Transitions:
   - {fileID: 1101031452781764894}
   m_StateMachineBehaviours: []
@@ -206,13 +206,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102957382907656592}
-    m_Position: {x: 144, y: 240, z: 0}
+    m_Position: {x: 492, y: 216, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102833866795036324}
     m_Position: {x: 276, y: -12, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102522203915646654}
-    m_Position: {x: 456, y: 156, z: 0}
+    m_Position: {x: 156, y: 216, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -222,4 +222,17 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 1102957382907656592}
+  m_DefaultState: {fileID: 1102522203915646654}
+--- !u!1109 &1109323052972204472
+AnimatorTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1102522203915646654}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 1

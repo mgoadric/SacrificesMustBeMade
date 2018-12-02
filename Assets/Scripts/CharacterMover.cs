@@ -15,17 +15,30 @@ public class CharacterMover : MonoBehaviour {
         forward = true;
 	}
 
-	// Update is called once per frame
-	void Update () {
+    void Point(float zangle, float yangle)
+    {
+        Vector3 eulerAngles = gameObject.transform.localEulerAngles;
+        eulerAngles.z = zangle;
+        eulerAngles.y = yangle;
+        transform.localRotation = Quaternion.Euler(eulerAngles);
+    }
 
-		
-		var horizontal = Input.GetAxis("Horizontal");
+    // Update is called once per frame
+    void Update () {
 
 		if (Input.GetKeyDown(".")) {
+            if (animator.GetBool("run"))
+            {
+                Debug.Log("Testing");
+            }
             animator.SetTrigger("run");
             if (!forward)
             {
                 speed *= -1;
+                Point(0, 0);
+                Vector3 pos = transform.position;
+                pos.x += 1f;
+                transform.position = pos;
             }
             forward = true;
 		}
@@ -35,6 +48,10 @@ public class CharacterMover : MonoBehaviour {
             if (forward)
             {
                 speed *= -1;
+                Point(0, 180);
+                Vector3 pos = transform.position;
+                pos.x += -1f;
+                transform.position = pos;
             }
             forward = false;
         }
