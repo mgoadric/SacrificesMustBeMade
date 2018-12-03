@@ -78,29 +78,22 @@ public class CharacterMover : MonoBehaviour {
 
 	void FixedUpdate() {
 		Vector3 pos = transform.position;
-        if (pos.x > -7)
+
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle"))
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle"))
+            pos.x += speed;
+            transform.position = pos;
+            if (!source.isPlaying)
             {
-                pos.x += speed;
-                transform.position = pos;
-                if (!source.isPlaying)
-                {
-                    source.Play();
-                }
-            }
-            else
-            {
-                source.Stop();
-                speed = Mathf.Sign(speed) * 0.1f;
+                source.Play();
             }
         }
         else
         {
-            pos.x = -6.9f;
-            transform.position = pos;
+            source.Stop();
+            speed = Mathf.Sign(speed) * 0.1f;
         }
-
+        
     }
 
 	void OnCollisionEnter2D(Collision2D coll) {

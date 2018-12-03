@@ -75,13 +75,13 @@ public class CharacterFriend : MonoBehaviour {
         {
             Point(0, 0);
             Vector3 pos = transform.position;
-            pos.x += 1f;
+            pos.x -= 0.3f;
             transform.position = pos;
             speed = 0.08f;
             forward = true;
 
             // DIALOG TIME
-            dialogbox.GetComponent<TextMeshProUGUI>().text="THEY FOUND US, RUN!";
+            dialogbox.GetComponent<TextMeshPro>().text="THEY FOUND US, GRAB WHAT YOU CAN AND RUN!";
         }
         else if (coll.gameObject.tag == "Item")
         {
