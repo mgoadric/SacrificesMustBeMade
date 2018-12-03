@@ -16,7 +16,6 @@ public class CharacterFriend : MonoBehaviour {
     public GameObject dialogbox;
     public GameObject dialogbox2;
     public GameObject player;
-    public AudioClip scream;
     public State mystate;
 
     AudioSource source;
@@ -122,15 +121,38 @@ public class CharacterFriend : MonoBehaviour {
             count++;
             if (count > 1)
             {
-                goalhouse.transform.parent = null;
+                goalhouse.transform.parent = transform.parent;
+            }
+            if (player.GetComponent<CharacterMover>().mystate == State.DEAD)
+            {
+                mystate = State.DEAD;
+                GameManager.S.GetComponent<GameManager>().gamestate = State.DEAD;
             }
         }
 
-        source.Stop();
-        dialogbox.GetComponent<TextMeshPro>().text = "We can hide here, quiet!";
-        pos = transform.position;
-        pos.y += 21.3f;
-        transform.position = pos;
+        if (mystate == State.WIN)
+        {
+            source.Stop();
+            dialogbox.GetComponent<TextMeshPro>().text = "We can hide here, quiet!";
+            pos = transform.position;
+            pos.y += 21.3f;
+            transform.position = pos;
+
+            while (player.GetComponent<CharacterMover>().mystate == State.RUN)
+            {
+                yield return new WaitForSeconds(0.03f);
+            }
+
+            if (player.GetComponent<CharacterMover>().mystate == State.DEAD)
+            {
+                mystate = State.DEAD;
+                GameManager.S.GetComponent<GameManager>().gamestate = State.DEAD;
+            } else
+            {
+                dialogbox.GetComponent<TextMeshPro>().text = "You made it!";
+                GameManager.S.GetComponent<GameManager>().gamestate = State.WIN;
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D coll)

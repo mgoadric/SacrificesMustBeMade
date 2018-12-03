@@ -72,7 +72,7 @@ public class CharacterMover : MonoBehaviour {
 
                     GameObject item = items[0];
                     items.RemoveAt(0);
-                    item.transform.parent = null;
+                    item.transform.parent = transform.parent;
                     Vector3 ipos = item.transform.position;
                     ipos += new Vector3(-1, 0, 0);
                     item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
