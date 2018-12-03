@@ -45,8 +45,7 @@ public class Window : MonoBehaviour
         taken[which] = true;
         images[which].SetActive(false);
         Debug.Log("Took " + (which + 1));
-        GameObject it = Instantiate(item, player.transform);
-        it.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        GameObject it = Instantiate(item);
         it.GetComponent<SpriteRenderer>().sprite = images[which].GetComponent<SpriteRenderer>().sprite;
         player.GetComponent<CharacterMover>().AddItem(it);
     }

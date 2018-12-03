@@ -2322,7 +2322,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4043317059442800, guid: 6412668ffdec946b19d70eb8074b11d7, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 6.22
+      value: -15.22
       objectReference: {fileID: 0}
     - target: {fileID: 4043317059442800, guid: 6412668ffdec946b19d70eb8074b11d7, type: 2}
       propertyPath: m_LocalPosition.y
@@ -6362,7 +6362,6 @@ MonoBehaviour:
   dialogbox2: {fileID: 598833612}
   player: {fileID: 1465781217}
   scream: {fileID: 0}
-  forward: 0
   mystate: 0
 --- !u!82 &1377820944
 AudioSource:

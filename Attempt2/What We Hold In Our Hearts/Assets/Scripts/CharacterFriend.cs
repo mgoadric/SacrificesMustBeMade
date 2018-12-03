@@ -17,7 +17,6 @@ public class CharacterFriend : MonoBehaviour {
     public GameObject dialogbox2;
     public GameObject player;
     public AudioClip scream;
-    public bool forward;
     public State mystate;
 
     AudioSource source;
@@ -28,7 +27,6 @@ public class CharacterFriend : MonoBehaviour {
         mystate = State.NEWS;
 		animator = this.GetComponent<Animator>();
         source = GetComponent<AudioSource>();
-        Point(0, 180);
         StartRunning();
 	}
 
@@ -54,17 +52,11 @@ public class CharacterFriend : MonoBehaviour {
 
     void FixedUpdate() {
 		Vector3 pos = transform.position;
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle")) {
-            if (forward)
-            {
-                pos.x += speed;
-            }
-            else
-            {
-                pos.x -= speed;
-            }
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle"))
+        {
+            pos.x += speed;
             transform.position = pos;
-        } 
+        }
 		
 	}
 
@@ -109,6 +101,9 @@ public class CharacterFriend : MonoBehaviour {
                 dialogbox2.GetComponent<TextMeshPro>().text = "Hit the number to grab the item.";
             }
         }
+        Vector3 pos = transform.position;
+        pos.x += 1.3f;
+        transform.position = pos;
         window.GetComponent<Window>().Deactivate();
         enemies.GetComponent<Enemies>().Activate();
         dialogbox.GetComponent<TextMeshPro>().text = "TOO LATE, RUN!";
@@ -134,14 +129,10 @@ public class CharacterFriend : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (!forward && coll.gameObject.tag == "Character")
+        if (mystate == State.NEWS && coll.gameObject.tag == "Character")
         {
-            Point(0, 0);
-            Vector3 pos = transform.position;
-            pos.x -= 0.3f;
-            transform.position = pos;
+            
             speed = 0.08f;
-            forward = true;
             mystate = State.WAIT;
         
         } else if (coll.gameObject.tag == "GoalHouse")
