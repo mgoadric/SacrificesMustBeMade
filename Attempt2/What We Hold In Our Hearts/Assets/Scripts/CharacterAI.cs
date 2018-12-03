@@ -58,5 +58,9 @@ public class CharacterAI : MonoBehaviour {
         {
             Destroy(coll.gameObject);
         }
+        else if (coll.gameObject.tag == "GoalHouse")
+        {
+            coll.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 }

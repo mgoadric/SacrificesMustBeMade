@@ -8,7 +8,6 @@ public class Enemies : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Deactivate();
 	}
 	
 	// Update is called once per frame
@@ -21,18 +20,8 @@ public class Enemies : MonoBehaviour {
         for (int i = 0; i < enemies.Length; i++)
         {
             GameObject e = enemies[i];
-            e.SetActive(true);
             e.GetComponent<CharacterAI>().StartRunning();
         }
     }
-
-    public void Deactivate()
-    {
-        foreach (GameObject e in enemies)
-        {
-            e.SetActive(false);
-        }
-    }
-
 
 }

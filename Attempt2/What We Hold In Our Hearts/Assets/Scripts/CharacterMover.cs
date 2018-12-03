@@ -8,8 +8,7 @@ public class CharacterMover : MonoBehaviour {
 	public float speed;
 	private bool forward;
     public int pressure;
-    public GameObject item;
-    public int items;
+    public List<GameObject> items;
     public AudioClip breathing;
     public State mystate;
 
@@ -21,6 +20,7 @@ public class CharacterMover : MonoBehaviour {
 		animator = this.GetComponent<Animator>();
         source = GetComponent<AudioSource>();
         mystate = State.WAIT;
+        items = new List<GameObject>();
         forward = true;
 	}
 
@@ -30,6 +30,21 @@ public class CharacterMover : MonoBehaviour {
         eulerAngles.z = zangle;
         eulerAngles.y = yangle;
         transform.localRotation = Quaternion.Euler(eulerAngles);
+    }
+
+    public void AddItem(GameObject item)
+    {
+        items.Add(item);
+        item.GetComponent<Item>().grounded = false;
+        item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        item.transform.parent = transform;
+        item.transform.position = transform.position;
+        // TODO Put it in the right coordinates
+    }
+
+    public void DropItem()
+    {
+
     }
 
     // Update is called once per frame
@@ -51,10 +66,17 @@ public class CharacterMover : MonoBehaviour {
                 }
 
                 // Drop something
-                if (pressure > 30 && Random.Range(0.0f, 1.0f) < (0.1 + (pressure - 30) * 0.05) && items > 0)
+                if (pressure > 30 && Random.Range(0.0f, 1.0f) < (0.1 + (pressure - 30) * 0.05) && items.Count > 0)
                 {
-                    Instantiate(item, transform.position + new Vector3(-1, 0, 0), Quaternion.identity);
-                    items--;
+                    DropItem();
+
+                    GameObject item = items[0];
+                    items.RemoveAt(0);
+                    item.transform.parent = transform.parent;
+                    Vector3 ipos = item.transform.position;
+                    ipos += new Vector3(-1, 0, 0);
+                    item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                    item.transform.position = ipos;
                 }
 
                 animator.SetTrigger("run");
@@ -83,7 +105,8 @@ public class CharacterMover : MonoBehaviour {
 	void FixedUpdate() {
 		Vector3 pos = transform.position;
 
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle"))
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterRun") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterRun2"))
         {
             pos.x += speed;
             transform.position = pos;
@@ -101,13 +124,27 @@ public class CharacterMover : MonoBehaviour {
     }
 
 	void OnCollisionEnter2D(Collision2D coll) {
+        Debug.Log("Hit something...");
 		if (coll.gameObject.tag == "Item") {
+            Debug.Log("Hit an item...");
             Item itemhit = coll.collider.gameObject.GetComponent<Item>();
             if (itemhit.grounded)
             {
-                items++;
-                Destroy(coll.collider.gameObject);
+                AddItem(coll.gameObject);
             }
-		}
-	}
+        }
+        else if (coll.gameObject.tag == "GoalHouse")
+        {
+            Debug.Log("Hit the goal house!");
+            mystate = State.WIN;
+            Vector3 pos = transform.position;
+            pos.y += 21.3f;
+            transform.position = pos;
+        }
+        else if (coll.gameObject.tag == "Enemy")
+        {
+            mystate = State.DEAD;
+            animator.SetTrigger("death");
+        }
+    }
 }

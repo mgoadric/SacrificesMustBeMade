@@ -10,13 +10,12 @@ public class CharacterFriend : MonoBehaviour {
 	private Animator animator;
 	public float speed;
     public GameObject window;
+    public GameObject goalhouse;
     public GameObject enemies;
     public GameObject item;
     public GameObject dialogbox;
     public GameObject dialogbox2;
     public GameObject player;
-    public AudioClip scream;
-    public bool forward;
     public State mystate;
 
     AudioSource source;
@@ -27,7 +26,6 @@ public class CharacterFriend : MonoBehaviour {
         mystate = State.NEWS;
 		animator = this.GetComponent<Animator>();
         source = GetComponent<AudioSource>();
-        Point(0, 180);
         StartRunning();
 	}
 
@@ -53,17 +51,11 @@ public class CharacterFriend : MonoBehaviour {
 
     void FixedUpdate() {
 		Vector3 pos = transform.position;
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle")) {
-            if (forward)
-            {
-                pos.x += speed;
-            }
-            else
-            {
-                pos.x -= speed;
-            }
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle"))
+        {
+            pos.x += speed;
             transform.position = pos;
-        } 
+        }
 		
 	}
 
@@ -89,16 +81,16 @@ public class CharacterFriend : MonoBehaviour {
         while (mystate == State.WAIT)
         {
             yield return new WaitForSeconds(0.03f);
-            if (player.GetComponent<CharacterMover>().items == 1)
+            if (player.GetComponent<CharacterMover>().items.Count == 1)
             {
                 dialogbox.GetComponent<TextMeshPro>().text = "I CAN'T WAIT FOREVER!";
 
             }
-            else if (player.GetComponent<CharacterMover>().items == 2)
+            else if (player.GetComponent<CharacterMover>().items.Count == 2)
             {
                 dialogbox.GetComponent<TextMeshPro>().text = "HURRY UP!";
             }
-            else if (player.GetComponent<CharacterMover>().items >= 3)
+            else if (player.GetComponent<CharacterMover>().items.Count >= 3)
             {
                 mystate = State.RUN;
 
@@ -108,6 +100,9 @@ public class CharacterFriend : MonoBehaviour {
                 dialogbox2.GetComponent<TextMeshPro>().text = "Hit the number to grab the item.";
             }
         }
+        Vector3 pos = transform.position;
+        pos.x += 1.3f;
+        transform.position = pos;
         window.GetComponent<Window>().Deactivate();
         enemies.GetComponent<Enemies>().Activate();
         dialogbox.GetComponent<TextMeshPro>().text = "TOO LATE, RUN!";
@@ -116,29 +111,63 @@ public class CharacterFriend : MonoBehaviour {
         speed = 0.08f;
         source.Play();
 
+        int count = 0;
+
         while (mystate == State.RUN)
         {
             animator.SetTrigger("run");
             yield return new WaitForSeconds(0.5f);
             speed *= 1.003f;
+            count++;
+            if (count > 1)
+            {
+                goalhouse.transform.parent = transform.parent;
+            }
+            if (player.GetComponent<CharacterMover>().mystate == State.DEAD)
+            {
+                mystate = State.DEAD;
+                GameManager.S.GetComponent<GameManager>().gamestate = State.DEAD;
+            }
+        }
+
+        if (mystate == State.WIN)
+        {
+            source.Stop();
+            dialogbox.GetComponent<TextMeshPro>().text = "We can hide here, quiet!";
+            pos = transform.position;
+            pos.y += 21.3f;
+            transform.position = pos;
+
+            while (player.GetComponent<CharacterMover>().mystate == State.RUN)
+            {
+                yield return new WaitForSeconds(0.03f);
+            }
+
+            if (player.GetComponent<CharacterMover>().mystate == State.DEAD)
+            {
+                mystate = State.DEAD;
+                GameManager.S.GetComponent<GameManager>().gamestate = State.DEAD;
+            } else
+            {
+                dialogbox.GetComponent<TextMeshPro>().text = "You made it!";
+                GameManager.S.GetComponent<GameManager>().gamestate = State.WIN;
+            }
         }
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (!forward && coll.gameObject.tag == "Character")
+        if (mystate == State.NEWS && coll.gameObject.tag == "Character")
         {
-            Point(0, 0);
-            Vector3 pos = transform.position;
-            pos.x -= 0.3f;
-            transform.position = pos;
+            
             speed = 0.08f;
-            forward = true;
             mystate = State.WAIT;
-        }
-        else if (coll.gameObject.tag == "Item")
+        
+        } else if (coll.gameObject.tag == "GoalHouse")
         {
-            Destroy(coll.gameObject);
+            mystate = State.WIN;
+            
         }
     }
+
 }
