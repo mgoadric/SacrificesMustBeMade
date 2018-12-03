@@ -104,7 +104,8 @@ public class CharacterMover : MonoBehaviour {
 	void FixedUpdate() {
 		Vector3 pos = transform.position;
 
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdle"))
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterRun") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterRun2"))
         {
             pos.x += speed;
             transform.position = pos;
@@ -132,6 +133,12 @@ public class CharacterMover : MonoBehaviour {
         else if (coll.gameObject.tag == "GoalHouse")
         {
             mystate = State.WIN;
+            animation.SetTrigger("win");
+        }
+        else if (coll.gameObject.tag == "Enemy")
+        {
+            mystate = State.DEAD;
+            animator.SetTrigger("death");
         }
     }
 }
