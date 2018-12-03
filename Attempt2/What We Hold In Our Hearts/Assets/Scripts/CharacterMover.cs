@@ -51,7 +51,7 @@ public class CharacterMover : MonoBehaviour {
     void Update () {
         if (mystate == State.RUN)
         {
-            if (Input.GetKeyDown("."))
+            if (Input.GetKeyDown(".") || Input.GetKeyDown("right"))
             {
                 if (animator.GetBool("run"))
                 {
@@ -88,7 +88,7 @@ public class CharacterMover : MonoBehaviour {
                 }
                 forward = true;
             }
-            else if (Input.GetKeyDown(","))
+            else if (Input.GetKeyDown(",") || Input.GetKeyDown("left"))
             {
                 animator.SetTrigger("run");
                 if (forward)

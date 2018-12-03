@@ -108,7 +108,7 @@ public class CharacterFriend : MonoBehaviour {
         window.GetComponent<Window>().Deactivate();
         enemies.GetComponent<Enemies>().Activate();
         dialogbox.GetComponent<TextMeshPro>().text = "TOO LATE, RUN!";
-        dialogbox2.GetComponent<TextMeshPro>().text = "'<' left | right '>'";
+        dialogbox2.GetComponent<TextMeshPro>().text = "'A' left | right 'D'";
         player.GetComponent<CharacterMover>().mystate = State.RUN;
         speed = 0.08f;
         source.Play();
