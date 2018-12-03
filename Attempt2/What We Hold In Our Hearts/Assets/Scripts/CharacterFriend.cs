@@ -10,6 +10,7 @@ public class CharacterFriend : MonoBehaviour {
 	private Animator animator;
 	public float speed;
     public GameObject window;
+    public GameObject goalhouse;
     public GameObject enemies;
     public GameObject item;
     public GameObject dialogbox;
@@ -116,11 +117,18 @@ public class CharacterFriend : MonoBehaviour {
         speed = 0.08f;
         source.Play();
 
+        int count = 0;
+
         while (mystate == State.RUN)
         {
             animator.SetTrigger("run");
             yield return new WaitForSeconds(0.5f);
             speed *= 1.003f;
+            count++;
+            if (count > 1)
+            {
+                goalhouse.transform.parent = null;
+            }
         }
     }
 
@@ -139,6 +147,9 @@ public class CharacterFriend : MonoBehaviour {
         else if (coll.gameObject.tag == "Item")
         {
             Destroy(coll.gameObject);
+        } else if (coll.gameObject.tag == "GoalHouse")
+        {
+            mystate = State.WIN;
         }
     }
 }

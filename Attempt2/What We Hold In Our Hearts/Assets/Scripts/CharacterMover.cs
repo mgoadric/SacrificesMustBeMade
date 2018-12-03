@@ -108,6 +108,10 @@ public class CharacterMover : MonoBehaviour {
                 items++;
                 Destroy(coll.collider.gameObject);
             }
-		}
-	}
+        }
+        else if (coll.gameObject.tag == "GoalHouse")
+        {
+            mystate = State.WIN;
+        }
+    }
 }
