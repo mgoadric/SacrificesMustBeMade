@@ -1,0 +1,13 @@
+{
+"companyName": "Goadrich Games",
+"productName": "What We Hold In Our Hearts",
+"dataUrl": "OurHearts.data.unityweb",
+"wasmCodeUrl": "OurHearts.wasm.code.unityweb",
+"wasmFrameworkUrl": "OurHearts.wasm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"}
+}
