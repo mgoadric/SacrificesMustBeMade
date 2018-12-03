@@ -11,6 +11,16 @@ public class Window : MonoBehaviour
     public bool active;
     public GameObject item;
 
+    string[] descriptions =
+    {
+        "Your Dad always did look good in that photo.",
+        "Couldn't leave Mom's war medals behind, eh?",
+        "If we survive, we need to pawn the jewelery.",
+        "Why do you keep those diaries?",
+        "Hold your passport tight, you need it!",
+        "Rosie would be happy you kept the bear."
+    };
+
     // Use this for initialization
     void Start()
     {
@@ -46,6 +56,7 @@ public class Window : MonoBehaviour
         images[which].SetActive(false);
         Debug.Log("Took " + (which + 1));
         GameObject it = Instantiate(item);
+        it.GetComponent<Item>().description = descriptions[which];
         it.GetComponent<SpriteRenderer>().sprite = images[which].GetComponent<SpriteRenderer>().sprite;
         player.GetComponent<CharacterMover>().AddItem(it);
     }

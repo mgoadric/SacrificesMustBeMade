@@ -16,6 +16,7 @@ public class CharacterFriend : MonoBehaviour {
     public GameObject dialogbox;
     public GameObject dialogbox2;
     public GameObject player;
+    public List<GameObject> mentioned;
     public State mystate;
 
     AudioSource source;
@@ -24,6 +25,7 @@ public class CharacterFriend : MonoBehaviour {
     // Use this for initialization
     void Start () {
         mystate = State.NEWS;
+        mentioned = new List<GameObject>();
 		animator = this.GetComponent<Animator>();
         source = GetComponent<AudioSource>();
         StartRunning();
@@ -97,7 +99,7 @@ public class CharacterFriend : MonoBehaviour {
             }
             else
             {
-                dialogbox2.GetComponent<TextMeshPro>().text = "Hit the number to grab the item.";
+                dialogbox2.GetComponent<TextMeshPro>().text = "[Hit the number to grab the item]";
             }
         }
         Vector3 pos = transform.position;
@@ -106,7 +108,7 @@ public class CharacterFriend : MonoBehaviour {
         window.GetComponent<Window>().Deactivate();
         enemies.GetComponent<Enemies>().Activate();
         dialogbox.GetComponent<TextMeshPro>().text = "TOO LATE, RUN!";
-        dialogbox2.GetComponent<TextMeshPro>().text = "< to move left, and > to move right.";
+        dialogbox2.GetComponent<TextMeshPro>().text = "'<' left | right '>'";
         player.GetComponent<CharacterMover>().mystate = State.RUN;
         speed = 0.08f;
         source.Play();
@@ -119,21 +121,47 @@ public class CharacterFriend : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
             speed *= 1.003f;
             count++;
-            if (count > 1)
+            if (count == 10 || count == 30 || count == 55 || count == 80)
+            {
+                dialogbox.GetComponent<TextMeshPro>().text = "";
+            }
+            else if (count == 20 || count == 45 || count == 70)
+            {
+                int savednum = player.GetComponent<CharacterMover>().items.Count;
+                if (savednum > 0)
+                {
+                    foreach (GameObject item in player.GetComponent<CharacterMover>().items)
+                    {
+                        if (!mentioned.Contains(item))
+                        {
+                            mentioned.Add(item);
+                            dialogbox.GetComponent<TextMeshPro>().text = item.GetComponent<Item>().description;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (count > 100)
             {
                 goalhouse.transform.parent = transform.parent;
+                dialogbox.GetComponent<TextMeshPro>().text = "We can hide here, quiet!";
+
             }
+
             if (player.GetComponent<CharacterMover>().mystate == State.DEAD)
             {
                 mystate = State.DEAD;
                 GameManager.S.GetComponent<GameManager>().gamestate = State.DEAD;
+                dialogbox.GetComponent<TextMeshPro>().text = "OH NO!";
+
+                dialogbox2.GetComponent<TextMeshPro>().text = "[press space to restart]";
             }
         }
 
         if (mystate == State.WIN)
         {
             source.Stop();
-            dialogbox.GetComponent<TextMeshPro>().text = "We can hide here, quiet!";
             pos = transform.position;
             pos.y += 21.3f;
             transform.position = pos;
@@ -147,9 +175,21 @@ public class CharacterFriend : MonoBehaviour {
             {
                 mystate = State.DEAD;
                 GameManager.S.GetComponent<GameManager>().gamestate = State.DEAD;
-            } else
+                dialogbox.GetComponent<TextMeshPro>().text = "OH NO!";
+
+                dialogbox2.GetComponent<TextMeshPro>().text = "[press space to restart]";
+
+            }
+            else
             {
                 dialogbox.GetComponent<TextMeshPro>().text = "You made it!";
+
+                yield return new WaitForSeconds(2.03f);
+                int savednum = player.GetComponent<CharacterMover>().items.Count;
+
+                dialogbox.GetComponent<TextMeshPro>().text = "You saved " + savednum + " treasured items.";
+
+                dialogbox2.GetComponent<TextMeshPro>().text = "[press space to restart]";
                 GameManager.S.GetComponent<GameManager>().gamestate = State.WIN;
             }
         }

@@ -6,6 +6,7 @@ public class Item : MonoBehaviour
 {
 
     public bool grounded;
+    public string description;
 
     // Use this for initialization
     void Start()
