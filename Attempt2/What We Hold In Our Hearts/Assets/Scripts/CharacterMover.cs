@@ -60,9 +60,6 @@ public class CharacterMover : MonoBehaviour {
                 speed = 0.1f;
                 pressure = 0;
                 Point(0, 0);
-                Vector3 pos = transform.position;
-                pos.x += 1f;
-                transform.position = pos;
             }
             forward = true;
 		}
@@ -74,9 +71,6 @@ public class CharacterMover : MonoBehaviour {
                 speed = -0.1f;
                 pressure = 0;
                 Point(0, 180);
-                Vector3 pos = transform.position;
-                pos.x += -1f;
-                transform.position = pos;
             }
             forward = false;
         }
@@ -100,6 +94,11 @@ public class CharacterMover : MonoBehaviour {
                 source.Stop();
                 speed = Mathf.Sign(speed) * 0.1f;
             }
+        }
+        else
+        {
+            pos.x = -6.9f;
+            transform.position = pos;
         }
 
     }
