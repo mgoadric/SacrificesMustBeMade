@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum State { NEWS, WAIT, RUN, DEAD, WIN}
+
 public class CharacterFriend : MonoBehaviour {
 
 	private Animator animator;
@@ -11,12 +13,14 @@ public class CharacterFriend : MonoBehaviour {
     public GameObject dialogbox;
     public AudioClip scream;
     public bool forward;
+    public State mystate;
 
     AudioSource source;
 
 
     // Use this for initialization
     void Start () {
+        mystate = State.NEWS;
 		animator = this.GetComponent<Animator>();
         source = GetComponent<AudioSource>();
         Point(0, 180);
@@ -59,9 +63,34 @@ public class CharacterFriend : MonoBehaviour {
 		
 	}
 
+    void SetState(State s)
+    {
+        mystate = s;
+    }
+
     IEnumerator DoCheck()
     {
-        for (; ; )
+        speed = 0.04f;
+        while (mystate == State.NEWS)
+        {
+            animator.SetTrigger("run");
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        // DIALOG TIME
+        dialogbox.GetComponent<TextMeshPro>().text = "THEY FOUND US, GRAB WHAT YOU CAN!";
+        source.Stop();
+        while (mystate == State.WAIT)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+        }
+
+        dialogbox.GetComponent<TextMeshPro>().text = "RUN!\nMASH > FOR FORWARD, < FOR BACK!";
+        speed = 0.08f;
+        source.Play();
+
+        while (mystate == State.RUN)
         {
             animator.SetTrigger("run");
             yield return new WaitForSeconds(0.5f);
@@ -79,9 +108,7 @@ public class CharacterFriend : MonoBehaviour {
             transform.position = pos;
             speed = 0.08f;
             forward = true;
-
-            // DIALOG TIME
-            dialogbox.GetComponent<TextMeshPro>().text="THEY FOUND US, GRAB WHAT YOU CAN AND RUN!";
+            mystate = State.WAIT;
         }
         else if (coll.gameObject.tag == "Item")
         {

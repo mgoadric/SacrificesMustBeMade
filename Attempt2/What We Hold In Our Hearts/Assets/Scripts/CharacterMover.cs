@@ -11,6 +11,7 @@ public class CharacterMover : MonoBehaviour {
     public GameObject item;
     public int items = 3;
     public AudioClip breathing;
+    public State mystate;
 
     AudioSource source;
 
@@ -19,7 +20,7 @@ public class CharacterMover : MonoBehaviour {
     void Start () {
 		animator = this.GetComponent<Animator>();
         source = GetComponent<AudioSource>();
-
+        mystate = State.WAIT;
         forward = true;
 	}
 
@@ -33,46 +34,49 @@ public class CharacterMover : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
-		if (Input.GetKeyDown(".")) {
-            if (animator.GetBool("run"))
-            {
-                pressure++;
-                speed *= 1.01f;
-            }
-
-            if (pressure % 14 == 1)
-            {
-                source.PlayOneShot(breathing);
-                pressure++;
-            }
-
-            // Drop something
-            if (pressure > 30 && Random.Range(0.0f, 1.0f) < (0.1 + (pressure - 30) * 0.05) && items > 0)
-            {
-                Instantiate(item, transform.position + new Vector3(-1, 6.7f, 0), Quaternion.identity);
-                items--;
-            }
-
-            animator.SetTrigger("run");
-            if (!forward)
-            {
-                speed = 0.1f;
-                pressure = 0;
-                Point(0, 0);
-            }
-            forward = true;
-		}
-        else if (Input.GetKeyDown(","))
+        if (mystate == State.RUN)
         {
-            animator.SetTrigger("run");
-            if (forward)
+            if (Input.GetKeyDown("D"))
             {
-                speed = -0.1f;
-                pressure = 0;
-                Point(0, 180);
+                if (animator.GetBool("run"))
+                {
+                    pressure++;
+                    speed *= 1.01f;
+                }
+
+                if (pressure % 14 == 1)
+                {
+                    source.PlayOneShot(breathing);
+                    pressure++;
+                }
+
+                // Drop something
+                if (pressure > 30 && Random.Range(0.0f, 1.0f) < (0.1 + (pressure - 30) * 0.05) && items > 0)
+                {
+                    Instantiate(item, transform.position + new Vector3(-1, 0, 0), Quaternion.identity);
+                    items--;
+                }
+
+                animator.SetTrigger("run");
+                if (!forward)
+                {
+                    speed = 0.1f;
+                    pressure = 0;
+                    Point(0, 0);
+                }
+                forward = true;
             }
-            forward = false;
+            else if (Input.GetKeyDown("A"))
+            {
+                animator.SetTrigger("run");
+                if (forward)
+                {
+                    speed = -0.1f;
+                    pressure = 0;
+                    Point(0, 180);
+                }
+                forward = false;
+            }
         }
     }
 
