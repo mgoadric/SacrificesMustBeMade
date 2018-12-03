@@ -3785,6 +3785,7 @@ MonoBehaviour:
   - {fileID: 30410442}
   - {fileID: 216768585}
   active: 0
+  item: {fileID: 1439455875727434, guid: b70c9d05119fe45ce9c111f21a1cf4ae, type: 2}
 --- !u!1 &754946743
 GameObject:
   m_ObjectHideFlags: 0

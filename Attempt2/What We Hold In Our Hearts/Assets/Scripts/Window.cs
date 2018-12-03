@@ -9,6 +9,7 @@ public class Window : MonoBehaviour
     public bool[] taken;
     public GameObject[] images;
     public bool active;
+    public GameObject item;
 
     // Use this for initialization
     void Start()
@@ -39,57 +40,44 @@ public class Window : MonoBehaviour
         }
     }
 
+    void TakeSomething(int which)
+    {
+        taken[which] = true;
+        images[which].SetActive(false);
+        Debug.Log("Took " + (which + 1));
+        GameObject it = Instantiate(item, player.transform);
+        it.GetComponent<SpriteRenderer>().sprite = images[which].GetComponent<SpriteRenderer>().sprite;
+        player.GetComponent<CharacterMover>().AddItem(it);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (active && player.GetComponent<CharacterMover>().items < 3)
+        if (active && player.GetComponent<CharacterMover>().items.Count < 3)
         {
             if (Input.GetKeyDown("1") && !taken[0])
             {
-                taken[0] = true;
-                images[0].SetActive(false);
-                Debug.Log("Took 1");
-                player.GetComponent<CharacterMover>().items++;
+                TakeSomething(0);
             }
             else if (Input.GetKeyDown("2") && !taken[1])
             {
-                taken[1] = true;
-                images[1].SetActive(false);
-                Debug.Log("Took 2");
-                player.GetComponent<CharacterMover>().items++;
-
+                TakeSomething(1);
             }
             else if (Input.GetKeyDown("3") && !taken[2])
             {
-                taken[2] = true;
-                images[2].SetActive(false);
-                Debug.Log("Took 3");
-                player.GetComponent<CharacterMover>().items++;
-
+                TakeSomething(2);
             }
             else if (Input.GetKeyDown("4") && !taken[3])
             {
-                taken[3] = true;
-                images[3].SetActive(false);
-                Debug.Log("Took 4");
-                player.GetComponent<CharacterMover>().items++;
-
+                TakeSomething(3);
             }
             else if (Input.GetKeyDown("5") && !taken[4])
             {
-                taken[4] = true;
-                images[4].SetActive(false);
-                Debug.Log("Took 5");
-                player.GetComponent<CharacterMover>().items++;
-
+                TakeSomething(4);
             }
             else if (Input.GetKeyDown("6") && !taken[5])
             {
-                taken[5] = true;
-                images[5].SetActive(false);
-                Debug.Log("Took 6");
-                player.GetComponent<CharacterMover>().items++;
-
+                TakeSomething(5);
             }
         }
     }

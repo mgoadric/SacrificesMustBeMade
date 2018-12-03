@@ -8,8 +8,7 @@ public class CharacterMover : MonoBehaviour {
 	public float speed;
 	private bool forward;
     public int pressure;
-    public GameObject item;
-    public int items;
+    public List<GameObject> items;
     public AudioClip breathing;
     public State mystate;
 
@@ -21,6 +20,7 @@ public class CharacterMover : MonoBehaviour {
 		animator = this.GetComponent<Animator>();
         source = GetComponent<AudioSource>();
         mystate = State.WAIT;
+        items = new List<GameObject>();
         forward = true;
 	}
 
@@ -30,6 +30,13 @@ public class CharacterMover : MonoBehaviour {
         eulerAngles.z = zangle;
         eulerAngles.y = yangle;
         transform.localRotation = Quaternion.Euler(eulerAngles);
+    }
+
+    public void AddItem(GameObject item)
+    {
+        items.Add(item);
+
+        // TODO Put it in the right coordinates
     }
 
     // Update is called once per frame
@@ -51,10 +58,14 @@ public class CharacterMover : MonoBehaviour {
                 }
 
                 // Drop something
-                if (pressure > 30 && Random.Range(0.0f, 1.0f) < (0.1 + (pressure - 30) * 0.05) && items > 0)
+                if (pressure > 30 && Random.Range(0.0f, 1.0f) < (0.1 + (pressure - 30) * 0.05) && items.Count > 0)
                 {
-                    Instantiate(item, transform.position + new Vector3(-1, 0, 0), Quaternion.identity);
-                    items--;
+                    GameObject item = items[0];
+                    items.RemoveAt(0);
+                    item.transform.parent = null;
+                    Vector3 ipos = item.transform.position;
+                    ipos += new Vector3(-1, 0, 0);
+                    item.transform.position = ipos;
                 }
 
                 animator.SetTrigger("run");
@@ -105,7 +116,8 @@ public class CharacterMover : MonoBehaviour {
             Item itemhit = coll.collider.gameObject.GetComponent<Item>();
             if (itemhit.grounded)
             {
-                items++;
+                items.Add(coll.gameObject);
+                
                 Destroy(coll.collider.gameObject);
             }
         }

@@ -90,16 +90,16 @@ public class CharacterFriend : MonoBehaviour {
         while (mystate == State.WAIT)
         {
             yield return new WaitForSeconds(0.03f);
-            if (player.GetComponent<CharacterMover>().items == 1)
+            if (player.GetComponent<CharacterMover>().items.Count == 1)
             {
                 dialogbox.GetComponent<TextMeshPro>().text = "I CAN'T WAIT FOREVER!";
 
             }
-            else if (player.GetComponent<CharacterMover>().items == 2)
+            else if (player.GetComponent<CharacterMover>().items.Count == 2)
             {
                 dialogbox.GetComponent<TextMeshPro>().text = "HURRY UP!";
             }
-            else if (player.GetComponent<CharacterMover>().items >= 3)
+            else if (player.GetComponent<CharacterMover>().items.Count >= 3)
             {
                 mystate = State.RUN;
 
