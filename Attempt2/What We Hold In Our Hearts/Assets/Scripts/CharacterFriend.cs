@@ -125,6 +125,12 @@ public class CharacterFriend : MonoBehaviour {
                 goalhouse.transform.parent = null;
             }
         }
+
+        source.Stop();
+        dialogbox.GetComponent<TextMeshPro>().text = "We can hide here, quiet!";
+        pos = transform.position;
+        pos.y += 21.3f;
+        transform.position = pos;
     }
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -138,6 +144,8 @@ public class CharacterFriend : MonoBehaviour {
         } else if (coll.gameObject.tag == "GoalHouse")
         {
             mystate = State.WIN;
+            
         }
     }
+
 }

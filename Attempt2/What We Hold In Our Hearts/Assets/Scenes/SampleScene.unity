@@ -4785,8 +4785,8 @@ GameObject:
   m_Component:
   - component: {fileID: 990889731}
   - component: {fileID: 990889732}
-  - component: {fileID: 990889734}
   - component: {fileID: 990889733}
+  - component: {fileID: 990889734}
   m_Layer: 0
   m_Name: housegoalAsset 15
   m_TagString: GoalHouse
@@ -4887,7 +4887,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 990889730}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0

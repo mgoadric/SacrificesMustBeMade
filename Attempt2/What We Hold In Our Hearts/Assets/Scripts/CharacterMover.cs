@@ -35,6 +35,7 @@ public class CharacterMover : MonoBehaviour {
     public void AddItem(GameObject item)
     {
         items.Add(item);
+        item.GetComponent<Item>().grounded = false;
         item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         item.transform.parent = transform;
         item.transform.position = transform.position;
@@ -123,7 +124,9 @@ public class CharacterMover : MonoBehaviour {
     }
 
 	void OnCollisionEnter2D(Collision2D coll) {
+        Debug.Log("Hit something...");
 		if (coll.gameObject.tag == "Item") {
+            Debug.Log("Hit an item...");
             Item itemhit = coll.collider.gameObject.GetComponent<Item>();
             if (itemhit.grounded)
             {
@@ -132,8 +135,11 @@ public class CharacterMover : MonoBehaviour {
         }
         else if (coll.gameObject.tag == "GoalHouse")
         {
+            Debug.Log("Hit the goal house!");
             mystate = State.WIN;
-            animation.SetTrigger("win");
+            Vector3 pos = transform.position;
+            pos.y += 21.3f;
+            transform.position = pos;
         }
         else if (coll.gameObject.tag == "Enemy")
         {
