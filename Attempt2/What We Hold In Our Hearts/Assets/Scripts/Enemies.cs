@@ -18,16 +18,11 @@ public class Enemies : MonoBehaviour {
 
     public void Activate()
     {
-        StartCoroutine("MakeActiveRandom");
-    }
-
-    IEnumerator MakeActiveRandom()
-    {
-        foreach (GameObject e in enemies)
+        for (int i = 0; i < enemies.Length; i++)
         {
+            GameObject e = enemies[i];
             e.SetActive(true);
             e.GetComponent<CharacterAI>().StartRunning();
-            yield return new WaitForSeconds(Random.Range(0.01f, 0.04f));
         }
     }
 

@@ -120,7 +120,7 @@ public class CharacterFriend : MonoBehaviour {
         {
             animator.SetTrigger("run");
             yield return new WaitForSeconds(0.5f);
-            speed *= 1.002f;
+            speed *= 1.003f;
         }
     }
 
