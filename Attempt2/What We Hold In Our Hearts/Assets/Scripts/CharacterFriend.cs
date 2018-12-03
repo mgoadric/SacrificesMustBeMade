@@ -9,8 +9,11 @@ public class CharacterFriend : MonoBehaviour {
 
 	private Animator animator;
 	public float speed;
+    public GameObject window;
     public GameObject item;
     public GameObject dialogbox;
+    public GameObject dialogbox2;
+    public GameObject player;
     public AudioClip scream;
     public bool forward;
     public State mystate;
@@ -78,15 +81,37 @@ public class CharacterFriend : MonoBehaviour {
         }
 
         // DIALOG TIME
-        dialogbox.GetComponent<TextMeshPro>().text = "THEY FOUND US, GRAB WHAT YOU CAN!";
+        dialogbox.GetComponent<TextMeshPro>().text = "IT IS NOT SAFE! WE HAVE TO GO!\nGRAB ONLY WHAT MATTERS!";
         source.Stop();
+        window.GetComponent<Window>().Activate();
+        yield return new WaitForSeconds(1.5f);
         while (mystate == State.WAIT)
         {
             yield return new WaitForSeconds(0.5f);
+            if (player.GetComponent<CharacterMover>().items == 1)
+            {
+                dialogbox.GetComponent<TextMeshPro>().text = "I CAN'T WAIT FOREVER!";
 
+            }
+            else if (player.GetComponent<CharacterMover>().items == 2)
+            {
+                dialogbox.GetComponent<TextMeshPro>().text = "HURRY UP!";
+            }
+            else if (player.GetComponent<CharacterMover>().items == 3)
+            {
+                mystate = State.RUN;
+
+            }
+            else
+            {
+                dialogbox2.GetComponent<TextMeshPro>().text = "Hit the number to grab the item.";
+            }
         }
+        window.GetComponent<Window>().active = false;
 
-        dialogbox.GetComponent<TextMeshPro>().text = "RUN!\nMASH > FOR FORWARD, < FOR BACK!";
+        dialogbox.GetComponent<TextMeshPro>().text = "TOO LATE, RUN!";
+        dialogbox2.GetComponent<TextMeshPro>().text = "< to move left, and > to move right.";
+        player.GetComponent<CharacterMover>().mystate = State.RUN;
         speed = 0.08f;
         source.Play();
 

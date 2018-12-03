@@ -9,7 +9,7 @@ public class CharacterMover : MonoBehaviour {
 	private bool forward;
     public int pressure;
     public GameObject item;
-    public int items = 3;
+    public int items;
     public AudioClip breathing;
     public State mystate;
 
@@ -36,7 +36,7 @@ public class CharacterMover : MonoBehaviour {
     void Update () {
         if (mystate == State.RUN)
         {
-            if (Input.GetKeyDown("D"))
+            if (Input.GetKeyDown("."))
             {
                 if (animator.GetBool("run"))
                 {
@@ -66,7 +66,7 @@ public class CharacterMover : MonoBehaviour {
                 }
                 forward = true;
             }
-            else if (Input.GetKeyDown("A"))
+            else if (Input.GetKeyDown(","))
             {
                 animator.SetTrigger("run");
                 if (forward)
