@@ -20,6 +20,16 @@ public class Window : MonoBehaviour
         }
     }
 
+
+    public void Deactivate()
+    {
+        active = false;
+        foreach (GameObject img in images)
+        {
+            img.transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+
     public void Activate()
     {
         active = true;
@@ -32,7 +42,7 @@ public class Window : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (active)
+        if (active && player.GetComponent<CharacterMover>().items < 3)
         {
             if (Input.GetKeyDown("1") && !taken[0])
             {

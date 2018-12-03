@@ -10,6 +10,7 @@ public class CharacterFriend : MonoBehaviour {
 	private Animator animator;
 	public float speed;
     public GameObject window;
+    public GameObject enemies;
     public GameObject item;
     public GameObject dialogbox;
     public GameObject dialogbox2;
@@ -84,10 +85,10 @@ public class CharacterFriend : MonoBehaviour {
         dialogbox.GetComponent<TextMeshPro>().text = "IT IS NOT SAFE! WE HAVE TO GO!\nGRAB ONLY WHAT MATTERS!";
         source.Stop();
         window.GetComponent<Window>().Activate();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         while (mystate == State.WAIT)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.03f);
             if (player.GetComponent<CharacterMover>().items == 1)
             {
                 dialogbox.GetComponent<TextMeshPro>().text = "I CAN'T WAIT FOREVER!";
@@ -97,7 +98,7 @@ public class CharacterFriend : MonoBehaviour {
             {
                 dialogbox.GetComponent<TextMeshPro>().text = "HURRY UP!";
             }
-            else if (player.GetComponent<CharacterMover>().items == 3)
+            else if (player.GetComponent<CharacterMover>().items >= 3)
             {
                 mystate = State.RUN;
 
@@ -107,8 +108,8 @@ public class CharacterFriend : MonoBehaviour {
                 dialogbox2.GetComponent<TextMeshPro>().text = "Hit the number to grab the item.";
             }
         }
-        window.GetComponent<Window>().active = false;
-
+        window.GetComponent<Window>().Deactivate();
+        enemies.GetComponent<Enemies>().Activate();
         dialogbox.GetComponent<TextMeshPro>().text = "TOO LATE, RUN!";
         dialogbox2.GetComponent<TextMeshPro>().text = "< to move left, and > to move right.";
         player.GetComponent<CharacterMover>().mystate = State.RUN;

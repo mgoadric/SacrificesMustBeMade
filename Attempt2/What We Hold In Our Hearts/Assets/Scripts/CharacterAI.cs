@@ -13,14 +13,13 @@ public class CharacterAI : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
-		animator = this.GetComponent<Animator>();
+    void Start()
+    {
+        animator = this.GetComponent<Animator>();
         source = GetComponent<AudioSource>();
+    }
 
-        StartRunning();
-	}
-
-    void StartRunning()
+    public void StartRunning()
     {
         StartCoroutine("DoCheck");
     }
