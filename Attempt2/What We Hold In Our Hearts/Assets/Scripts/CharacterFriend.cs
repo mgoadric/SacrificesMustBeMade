@@ -143,10 +143,7 @@ public class CharacterFriend : MonoBehaviour {
             speed = 0.08f;
             forward = true;
             mystate = State.WAIT;
-        }
-        else if (coll.gameObject.tag == "Item")
-        {
-            Destroy(coll.gameObject);
+        
         } else if (coll.gameObject.tag == "GoalHouse")
         {
             mystate = State.WIN;

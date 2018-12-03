@@ -35,8 +35,15 @@ public class CharacterMover : MonoBehaviour {
     public void AddItem(GameObject item)
     {
         items.Add(item);
-
+        item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        item.transform.parent = transform;
+        item.transform.position = transform.position;
         // TODO Put it in the right coordinates
+    }
+
+    public void DropItem()
+    {
+
     }
 
     // Update is called once per frame
@@ -60,11 +67,14 @@ public class CharacterMover : MonoBehaviour {
                 // Drop something
                 if (pressure > 30 && Random.Range(0.0f, 1.0f) < (0.1 + (pressure - 30) * 0.05) && items.Count > 0)
                 {
+                    DropItem();
+
                     GameObject item = items[0];
                     items.RemoveAt(0);
                     item.transform.parent = null;
                     Vector3 ipos = item.transform.position;
                     ipos += new Vector3(-1, 0, 0);
+                    item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                     item.transform.position = ipos;
                 }
 
@@ -116,9 +126,7 @@ public class CharacterMover : MonoBehaviour {
             Item itemhit = coll.collider.gameObject.GetComponent<Item>();
             if (itemhit.grounded)
             {
-                items.Add(coll.gameObject);
-                
-                Destroy(coll.collider.gameObject);
+                AddItem(coll.gameObject);
             }
         }
         else if (coll.gameObject.tag == "GoalHouse")
