@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour {
             if (count > 100)
             {
                 // DROP OFF THE SAFEHOUSE AHEAD OF THE FRIEND
-                game.GetComponent<GameItems>().goalhouse.transform.parent = transform.parent;
+                game.GetComponent<GameItems>().goalhouse.transform.parent = game.transform;
                 dialogbox.GetComponent<TextMeshProUGUI>().text = "We can hide here, quiet!";
             }
         }
@@ -182,7 +182,22 @@ public class GameManager : MonoBehaviour {
             yield return new WaitForSeconds(2.03f);
             int savednum = game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().items.Count;
 
-            dialogbox.GetComponent<TextMeshProUGUI>().text = "You saved " + savednum + " treasured items.";
+            if (game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().items.Count == 0)
+            {
+                dialogbox.GetComponent<TextMeshProUGUI>().text = "You weep for your lost items. Try again.";
+            }
+            else if (game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().items.Count == 1)
+            {
+                dialogbox.GetComponent<TextMeshProUGUI>().text = "You only saved 1 treasured item. Try again.";
+            }
+            else if (game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().items.Count == 2)
+            {
+                dialogbox.GetComponent<TextMeshProUGUI>().text = "You saved " + savednum + " treasured items. Try again.";
+            }
+            else if (game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().items.Count == 3)
+            {
+                dialogbox.GetComponent<TextMeshProUGUI>().text = "You saved all three treasured items!";
+            }
             instructions.GetComponent<TextMeshProUGUI>().text = "";
             button.SetActive(true);
         }

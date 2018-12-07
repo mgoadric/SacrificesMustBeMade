@@ -1068,8 +1068,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -19.2, y: 0}
-  - {x: 19.2, y: 0}
+  - {x: -50, y: 0}
+  - {x: 50, y: 0}
 --- !u!50 &1782528636
 Rigidbody2D:
   serializedVersion: 4

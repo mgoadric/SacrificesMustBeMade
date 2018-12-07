@@ -44,6 +44,8 @@ public class CharacterAI : MonoBehaviour
     public void StopRunning()
     {
         StopCoroutine("AIRun");
+        animator.SetTrigger("stop");
+
         speed = 0;
         source.Stop();
     }
