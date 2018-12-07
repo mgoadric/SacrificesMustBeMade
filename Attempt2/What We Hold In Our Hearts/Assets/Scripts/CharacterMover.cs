@@ -49,7 +49,13 @@ public class CharacterMover : MonoBehaviour
 
     public void DropItem()
     {
-
+        GameObject item = items[0];
+        items.RemoveAt(0);
+        item.transform.parent = transform.parent;
+        Vector3 ipos = item.transform.position;
+        ipos += new Vector3(-1, 0, 0);
+        item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        item.transform.position = ipos;
     }
 
     // Update is called once per frame
@@ -74,14 +80,6 @@ public class CharacterMover : MonoBehaviour
                 if (pressure > 30 && Random.Range(0.0f, 1.0f) < (0.1 + (pressure - 30) * 0.05) && items.Count > 0)
                 {
                     DropItem();
-
-                    GameObject item = items[0];
-                    items.RemoveAt(0);
-                    item.transform.parent = transform.parent;
-                    Vector3 ipos = item.transform.position;
-                    ipos += new Vector3(-1, 0, 0);
-                    item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                    item.transform.position = ipos;
                 }
 
                 animator.SetTrigger("run");
@@ -104,6 +102,12 @@ public class CharacterMover : MonoBehaviour
                 }
                 forward = false;
             }
+            else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterRun") &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterRun2"))
+            {
+                source.Stop();
+
+            }
         }
     }
 
@@ -122,7 +126,6 @@ public class CharacterMover : MonoBehaviour
         }
         else
         {
-            source.Stop();
             speed = Mathf.Sign(speed) * 0.1f;
         }
         
@@ -144,15 +147,18 @@ public class CharacterMover : MonoBehaviour
         {
             Debug.Log("Hit the goal house!");
             mystate = State.WIN;
+            GameManager.S.gamestate = State.WIN;
+
             Vector3 pos = transform.position;
             pos.y += 21.3f;
             transform.position = pos;
         }
         else if (coll.gameObject.tag == "Enemy")
         {
-
+            Debug.Log("Playing scream");
             source.PlayOneShot(scream);
             mystate = State.DEAD;
+            GameManager.S.gamestate = State.DEAD;
             animator.SetTrigger("death");
         }
     }

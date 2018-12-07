@@ -196,6 +196,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grounded: 0
+  description: 
+  drop: {fileID: 8300000, guid: 09b1d19a5164e4103a2fef4c2a505778, type: 3}
 --- !u!212 &212743449868623148
 SpriteRenderer:
   m_ObjectHideFlags: 1

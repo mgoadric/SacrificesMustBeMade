@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour {
         game.GetComponent<GameItems>().friend.GetComponent<CharacterAI>().StartRunning(0.04f);
         while (gamestate == State.NEWS)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         game.GetComponent<GameItems>().friend.GetComponent<CharacterAI>().StopRunning();
@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour {
 
         // FRIEND AND ENEMIES START RUNNING
 
-        game.GetComponent<GameItems>().friend.GetComponent<CharacterAI>().ForceMove(1.3f, 0);
+        game.GetComponent<GameItems>().friend.GetComponent<CharacterAI>().ForceMove(.8f, 0);
         game.GetComponent<GameItems>().friend.GetComponent<CharacterAI>().StartRunning(0.08f);
 
         game.GetComponent<GameItems>().enemies.GetComponent<Enemies>().Activate(0.082f);
@@ -143,11 +143,6 @@ public class GameManager : MonoBehaviour {
                 game.GetComponent<GameItems>().goalhouse.transform.parent = transform.parent;
                 dialogbox.GetComponent<TextMeshProUGUI>().text = "We can hide here, quiet!";
             }
-
-            if (game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().mystate == State.DEAD)
-            {
-                gamestate = State.DEAD;
-            }
         }
 
         // FRIEND IS SAFE, THEY STOP AND WAIT
@@ -188,8 +183,8 @@ public class GameManager : MonoBehaviour {
             int savednum = game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().items.Count;
 
             dialogbox.GetComponent<TextMeshProUGUI>().text = "You saved " + savednum + " treasured items.";
-
-            instructions.GetComponent<TextMeshProUGUI>().text = "[press space to restart]";
+            instructions.GetComponent<TextMeshProUGUI>().text = "";
+            button.SetActive(true);
         }
     }
 }

@@ -7,10 +7,14 @@ public class Item : MonoBehaviour
 
     public bool grounded;
     public string description;
+    private AudioSource source;
+    public AudioClip drop;
+
 
     // Use this for initialization
     void Start()
     {
+        source = GetComponent<AudioSource>();
 
     }
 
@@ -25,6 +29,8 @@ public class Item : MonoBehaviour
         if (coll.gameObject.tag == "Ground")
         {
             grounded = true;
+            source.PlayOneShot(drop);
+
         }
     }
 }

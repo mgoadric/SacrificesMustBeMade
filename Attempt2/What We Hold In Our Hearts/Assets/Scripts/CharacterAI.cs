@@ -85,16 +85,16 @@ public class CharacterAI : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if ((GameManager.S.gamestate == State.RUN || GameManager.S.gamestate == State.FRIENDSAFE) && coll.gameObject.tag == "Item")
+        if ((GameManager.S.gamestate == State.RUN || GameManager.S.gamestate == State.FRIENDSAFE) && coll.gameObject.tag == "Item" && gameObject.tag == "Enemy")
         {
             Destroy(coll.gameObject);
         }
         else if (GameManager.S.gamestate == State.NEWS && coll.gameObject.tag == "Character")
         {
             GameManager.S.gamestate = State.WAIT;
-
+            StopRunning();
         }
-        else if ((GameManager.S.gamestate == State.RUN || GameManager.S.gamestate == State.FRIENDSAFE) && coll.gameObject.tag == "GoalHouse")
+        else if ((GameManager.S.gamestate != State.NEWS && GameManager.S.gamestate != State.WAIT) && coll.gameObject.tag == "GoalHouse")
         {
             if (gameObject.tag == "Friend")
             {
