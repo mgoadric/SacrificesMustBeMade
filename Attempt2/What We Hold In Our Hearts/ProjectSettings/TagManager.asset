@@ -9,6 +9,7 @@ TagManager:
   - Character
   - GoalHouse
   - Enemy
+  - Friend
   layers:
   - Default
   - TransparentFX

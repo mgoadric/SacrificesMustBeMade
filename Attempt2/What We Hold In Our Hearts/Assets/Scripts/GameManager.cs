@@ -14,8 +14,9 @@ public class GameManager : MonoBehaviour {
 
     public GameObject dialogbox;
     public GameObject instructions;
-    public Button button;
-    public Camera camera;
+    public GameObject button;
+    public Camera mcamera;
+    public GameObject logo;
 
     public List<GameObject> mentioned;
 
@@ -43,6 +44,8 @@ public class GameManager : MonoBehaviour {
         }
         game = Instantiate(gamePrefab);
         StartCoroutine("GameScript");
+        button.SetActive(false);
+        logo.SetActive(false);
     }
 
     IEnumerator GameScript()
@@ -52,10 +55,10 @@ public class GameManager : MonoBehaviour {
 
         game.GetComponent<GameItems>().friend.GetComponent<CharacterAI>().SetBoost(1.003f);
         game.GetComponent<GameItems>().enemies.GetComponent<Enemies>().SetBoost(1.004f);
-        game.GetComponent<GameItems>().friend.GetComponent<CharacterAI>().SetBoost(1.003f);
+        // set player boost too!!! TODO
         dialogbox.GetComponent<TextMeshProUGUI>().text = "";
         instructions.GetComponent<TextMeshProUGUI>().text = "";
-        camera.GetComponent<FollowCam>().playerSprite = game.GetComponent<GameItems>().player;
+        mcamera.GetComponent<FollowCam>().playerSprite = game.GetComponent<GameItems>().player;
         gamestate = State.NEWS;
 
         // NEWS - FRIEND RUNS IN
@@ -67,7 +70,7 @@ public class GameManager : MonoBehaviour {
         }
 
         game.GetComponent<GameItems>().friend.GetComponent<CharacterAI>().StopRunning();
-        dialogbox.GetComponent<TextMeshProUGUI>().text = "IT IS NOT SAFE! WE HAVE TO GO!\nGRAB ONLY WHAT MATTERS!";
+        dialogbox.GetComponent<TextMeshProUGUI>().text = "... NOT SAFE! WE HAVE TO GO! GRAB THINGS!";
         game.GetComponent<GameItems>().window.GetComponent<Window>().Activate();
         yield return new WaitForSeconds(1f);
 
@@ -78,7 +81,7 @@ public class GameManager : MonoBehaviour {
             instructions.GetComponent<TextMeshProUGUI>().text = "[Hit the number to grab the item]";
             if (game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().items.Count == 1)
             {
-                dialogbox.GetComponent<TextMeshProUGUI>().text = "I CAN'T WAIT FOREVER!";
+                dialogbox.GetComponent<TextMeshProUGUI>().text = "CAN'T WAIT FOREVER!";
 
             }
             else if (game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().items.Count == 2)
@@ -137,7 +140,6 @@ public class GameManager : MonoBehaviour {
             if (count > 100)
             {
                 // DROP OFF THE SAFEHOUSE AHEAD OF THE FRIEND
-                // FIXME
                 game.GetComponent<GameItems>().goalhouse.transform.parent = transform.parent;
                 dialogbox.GetComponent<TextMeshProUGUI>().text = "We can hide here, quiet!";
             }
@@ -165,7 +167,8 @@ public class GameManager : MonoBehaviour {
         if (gamestate == State.DEAD)
         {
             dialogbox.GetComponent<TextMeshProUGUI>().text = "OH NO!";
-            instructions.GetComponent<TextMeshProUGUI>().text = "[press space to restart]";
+            instructions.GetComponent<TextMeshProUGUI>().text = "";
+            button.SetActive(true);
         }
 
         // PLAYER MADE IT TO THE SAFEHOUSE
