@@ -3082,6 +3082,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4253954865556492}
+  - component: {fileID: 114068604220413960}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -4025,7 +4026,7 @@ GameObject:
   - component: {fileID: 70772813163164660}
   - component: {fileID: 95105541006405346}
   - component: {fileID: 82711486410906230}
-  - component: {fileID: 114596530944046676}
+  - component: {fileID: 114235803828143152}
   m_Layer: 0
   m_Name: Friend
   m_TagString: Character
@@ -11281,8 +11282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.082
-  item: {fileID: 0}
-  scream: {fileID: 8300000, guid: 5f96f365cf8844ac59b028e9d7cf4168, type: 3}
+  boost: 0
 --- !u!114 &114022230777511318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11434,6 +11434,22 @@ MonoBehaviour:
   m_SortingOrder: 5
   m_BoneTransforms:
   - {fileID: 4514787814659144}
+--- !u!114 &114068604220413960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1675247447707884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da8397f17d3745488997785d6560ad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  window: {fileID: 1479008881634024}
+  goalhouse: {fileID: 1414998165671092}
+  enemies: {fileID: 1244297500148928}
+  player: {fileID: 1032901382804924}
+  friend: {fileID: 1860691670129290}
 --- !u!114 &114075536282912338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11809,9 +11825,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
+  boost: 0
   pressure: 0
   items: []
   breathing: {fileID: 8300000, guid: 257a4b22228d34424b1922e2e56983c0, type: 3}
+  scream: {fileID: 0}
   mystate: 0
 --- !u!114 &114136903524316946
 MonoBehaviour:
@@ -12217,8 +12235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.082
-  item: {fileID: 0}
-  scream: {fileID: 8300000, guid: 5f96f365cf8844ac59b028e9d7cf4168, type: 3}
+  boost: 0
 --- !u!114 &114210851778342720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12283,6 +12300,19 @@ MonoBehaviour:
   m_SortingOrder: 0
   m_BoneTransforms:
   - {fileID: 4449515195496296}
+--- !u!114 &114235803828143152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1860691670129290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa72c7a82e4754a1fb8d16f5455a6010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  boost: 0
 --- !u!114 &114243931420528786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12807,8 +12837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.082
-  item: {fileID: 0}
-  scream: {fileID: 8300000, guid: 5f96f365cf8844ac59b028e9d7cf4168, type: 3}
+  boost: 0
 --- !u!114 &114335696452556922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14421,8 +14450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.082
-  item: {fileID: 0}
-  scream: {fileID: 8300000, guid: 5f96f365cf8844ac59b028e9d7cf4168, type: 3}
+  boost: 0
 --- !u!114 &114594330026478990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14438,27 +14466,6 @@ MonoBehaviour:
   m_Length: 0.21000074
   m_ChildTransform: {fileID: 4167600684619356}
   m_AttachedIK: {fileID: 0}
---- !u!114 &114596530944046676
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1860691670129290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97a58126dd4a540e790a006039c09c0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.08
-  window: {fileID: 1479008881634024}
-  goalhouse: {fileID: 1414998165671092}
-  enemies: {fileID: 1244297500148928}
-  item: {fileID: 0}
-  dialogbox: {fileID: 1313068521303640}
-  dialogbox2: {fileID: 1510866249683864}
-  player: {fileID: 1032901382804924}
-  game: {fileID: 1675247447707884}
-  mystate: 0
 --- !u!114 &114598314771856572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14509,8 +14516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.082
-  item: {fileID: 0}
-  scream: {fileID: 8300000, guid: 5f96f365cf8844ac59b028e9d7cf4168, type: 3}
+  boost: 0
 --- !u!114 &114641310549154308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14980,8 +14986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.082
-  item: {fileID: 0}
-  scream: {fileID: 8300000, guid: 5f96f365cf8844ac59b028e9d7cf4168, type: 3}
+  boost: 0
 --- !u!114 &114764607938296540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15599,8 +15604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.082
-  item: {fileID: 0}
-  scream: {fileID: 8300000, guid: 5f96f365cf8844ac59b028e9d7cf4168, type: 3}
+  boost: 0
 --- !u!114 &114934801260694460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15692,8 +15696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.082
-  item: {fileID: 0}
-  scream: {fileID: 8300000, guid: 5f96f365cf8844ac59b028e9d7cf4168, type: 3}
+  boost: 0
 --- !u!114 &114969979134927856
 MonoBehaviour:
   m_ObjectHideFlags: 1

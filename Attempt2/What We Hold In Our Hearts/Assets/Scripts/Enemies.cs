@@ -15,13 +15,20 @@ public class Enemies : MonoBehaviour {
 		
 	}
 
-    public void Activate()
+    public void SetBoost(float boost)
+    {
+        foreach (GameObject e in enemies)
+        {
+            e.GetComponent<CharacterAI>().SetBoost(boost);
+        }
+    }
+
+    public void Activate(float speed)
     {
         for (int i = 0; i < enemies.Length; i++)
         {
             GameObject e = enemies[i];
-            e.GetComponent<CharacterAI>().StartRunning();
+            e.GetComponent<CharacterAI>().StartRunning(speed);
         }
     }
-
 }

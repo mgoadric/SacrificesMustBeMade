@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMover : MonoBehaviour {
+public class CharacterMover : MonoBehaviour 
+{
 
 	private Animator animator;
-	public float speed;
+    private AudioSource source;
+
+    public float speed;
+    public float boost;
+
 	private bool forward;
     public int pressure;
     public List<GameObject> items;
     public AudioClip breathing;
+    public AudioClip scream;
     public State mystate;
-
-    AudioSource source;
-
 
     // Use this for initialization
     void Start () {
@@ -22,6 +25,8 @@ public class CharacterMover : MonoBehaviour {
         mystate = State.WAIT;
         items = new List<GameObject>();
         forward = true;
+        speed = 0;
+        boost = 1.01f;
 	}
 
     void Point(float zangle, float yangle)
@@ -56,7 +61,7 @@ public class CharacterMover : MonoBehaviour {
                 if (animator.GetBool("run"))
                 {
                     pressure++;
-                    speed *= 1.01f;
+                    speed *= boost;
                 }
 
                 if (pressure % 14 == 1)
@@ -83,7 +88,7 @@ public class CharacterMover : MonoBehaviour {
                 if (!forward)
                 {
                     speed = 0.1f;
-                    pressure = 0;
+                    //pressure = 0;
                     Point(0, 0);
                 }
                 forward = true;
@@ -94,7 +99,7 @@ public class CharacterMover : MonoBehaviour {
                 if (forward)
                 {
                     speed = -0.1f;
-                    pressure = 0;
+                    //pressure = 0;
                     Point(0, 180);
                 }
                 forward = false;
@@ -125,11 +130,13 @@ public class CharacterMover : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) {
         Debug.Log("Hit something...");
-		if (coll.gameObject.tag == "Item") {
+        if (coll.gameObject.tag == "Item")
+        {
             Debug.Log("Hit an item...");
             Item itemhit = coll.collider.gameObject.GetComponent<Item>();
             if (itemhit.grounded)
             {
+                pressure = 0;
                 AddItem(coll.gameObject);
             }
         }
@@ -143,6 +150,8 @@ public class CharacterMover : MonoBehaviour {
         }
         else if (coll.gameObject.tag == "Enemy")
         {
+
+            source.PlayOneShot(scream);
             mystate = State.DEAD;
             animator.SetTrigger("death");
         }

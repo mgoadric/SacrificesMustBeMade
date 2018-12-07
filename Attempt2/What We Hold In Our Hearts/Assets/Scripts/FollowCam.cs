@@ -19,23 +19,28 @@ public class FollowCam : MonoBehaviour {
 		rBound = Camera.main.pixelWidth - lBound;
         source = GetComponent<AudioSource>();
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
 
-		Vector3 spriteLoc = Camera.main.WorldToScreenPoint(playerSprite.transform.position);
+    // Update is called once per frame
+    void FixedUpdate() {
 
-		Vector3 pos = transform.position;
+        if (playerSprite)
+        {
+            Vector3 spriteLoc = Camera.main.WorldToScreenPoint(playerSprite.transform.position);
 
-		if (spriteLoc.x < lBound) {
-			pos.x -= lBound - spriteLoc.x;
-		} else if (spriteLoc.x > rBound) {
-			pos.x += spriteLoc.x - rBound;
-		}
+            Vector3 pos = transform.position;
 
-		pos = Vector3.Lerp(transform.position, pos, easing);
+            if (spriteLoc.x < lBound)
+            {
+                pos.x -= lBound - spriteLoc.x;
+            }
+            else if (spriteLoc.x > rBound)
+            {
+                pos.x += spriteLoc.x - rBound;
+            }
 
-		transform.position = pos;
+            pos = Vector3.Lerp(transform.position, pos, easing);
 
+            transform.position = pos;
+        }
 	}
 }
