@@ -66,27 +66,27 @@ public class Window : MonoBehaviour
     {
         if (active && player.GetComponent<CharacterMover>().items.Count < 3)
         {
-            if (Input.GetKeyDown("1") && !taken[0])
+            if ((Input.GetKeyDown("1") || Input.GetKeyDown("[1]")) && !taken[0])
             {
                 TakeSomething(0);
             }
-            else if (Input.GetKeyDown("2") && !taken[1])
+            else if ((Input.GetKeyDown("2") || Input.GetKeyDown("[2]")) && !taken[1])
             {
                 TakeSomething(1);
             }
-            else if (Input.GetKeyDown("3") && !taken[2])
+            else if ((Input.GetKeyDown("3") || Input.GetKeyDown("[3]")) && !taken[2])
             {
                 TakeSomething(2);
             }
-            else if (Input.GetKeyDown("4") && !taken[3])
+            else if ((Input.GetKeyDown("4") || Input.GetKeyDown("[4]")) && !taken[3])
             {
                 TakeSomething(3);
             }
-            else if (Input.GetKeyDown("5") && !taken[4])
+            else if ((Input.GetKeyDown("5") || Input.GetKeyDown("[5]")) && !taken[4])
             {
                 TakeSomething(4);
             }
-            else if (Input.GetKeyDown("6") && !taken[5])
+            else if ((Input.GetKeyDown("6") || Input.GetKeyDown("[6]")) && !taken[5])
             {
                 TakeSomething(5);
             }

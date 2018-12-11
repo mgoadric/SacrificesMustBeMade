@@ -79,9 +79,7 @@ public class CharacterAI : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterRun") ||
             animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterRun2"))
         {
-            Vector3 pos = transform.position;
-            pos.x += speed;
-            transform.position = pos;
+            ForceMove(speed, 0);
         }
     }
 
@@ -90,6 +88,7 @@ public class CharacterAI : MonoBehaviour
         if ((GameManager.S.gamestate == State.RUN || GameManager.S.gamestate == State.FRIENDSAFE) && coll.gameObject.tag == "Item" && gameObject.tag == "Enemy")
         {
             Destroy(coll.gameObject);
+            GameManager.S.lost++;
         }
         else if (GameManager.S.gamestate == State.NEWS && coll.gameObject.tag == "Character")
         {

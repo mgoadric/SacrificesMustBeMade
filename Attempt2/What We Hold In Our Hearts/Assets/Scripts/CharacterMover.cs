@@ -37,6 +37,15 @@ public class CharacterMover : MonoBehaviour
         transform.localRotation = Quaternion.Euler(eulerAngles);
     }
 
+    // Sometimes we just need to be somewhere else
+    public void ForceMove(float deltax, float deltay)
+    {
+        Vector3 pos = transform.position;
+        pos.x += deltax;
+        pos.y += deltay;
+        transform.position = pos;
+    }
+
     public void AddItem(GameObject item)
     {
         items.Add(item);
@@ -56,6 +65,11 @@ public class CharacterMover : MonoBehaviour
         ipos += new Vector3(-1, 0, 0);
         item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         item.transform.position = ipos;
+    }
+
+    public void Die()
+    {
+        animator.SetTrigger("death");
     }
 
     // Update is called once per frame
@@ -112,13 +126,11 @@ public class CharacterMover : MonoBehaviour
     }
 
 	void FixedUpdate() {
-		Vector3 pos = transform.position;
-
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterRun") ||
             animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterRun2"))
         {
-            pos.x += speed;
-            transform.position = pos;
+            ForceMove(speed, 0);
+
             if (!source.isPlaying)
             {
                 source.Play();
@@ -148,10 +160,7 @@ public class CharacterMover : MonoBehaviour
             Debug.Log("Hit the goal house!");
             mystate = State.WIN;
             GameManager.S.gamestate = State.WIN;
-
-            Vector3 pos = transform.position;
-            pos.y += 21.3f;
-            transform.position = pos;
+            ForceMove(0, 21.3f);
         }
         else if (coll.gameObject.tag == "Enemy")
         {
@@ -159,7 +168,7 @@ public class CharacterMover : MonoBehaviour
             source.PlayOneShot(scream);
             mystate = State.DEAD;
             GameManager.S.gamestate = State.DEAD;
-            animator.SetTrigger("death");
+            Die();
         }
     }
 }

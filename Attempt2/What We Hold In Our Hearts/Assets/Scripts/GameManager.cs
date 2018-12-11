@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum State { NEWS, WAIT, RUN, FRIENDSAFE, DEAD, WIN }
+public enum State { NEWS, WAIT, RUN, FRIENDSAFE, DEAD, WIN, DESPAIR }
 
 public class GameManager : MonoBehaviour {
 
@@ -15,8 +15,10 @@ public class GameManager : MonoBehaviour {
     public GameObject dialogbox;
     public GameObject instructions;
     public GameObject button;
+    public GameObject grip;  // Grip meter makes the game too easy???
     public Camera mcamera;
     public GameObject logo;
+    public int lost;
 
     public List<GameObject> mentioned;
 
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour {
         S = this;
         Debug.Log("Starting");
         mentioned = new List<GameObject>();
+        grip.SetActive(false);
 
         //StartCoroutine("GameScript");
     }
@@ -46,6 +49,8 @@ public class GameManager : MonoBehaviour {
         StartCoroutine("GameScript");
         button.SetActive(false);
         logo.SetActive(false);
+        grip.SetActive(false);
+
     }
 
     IEnumerator GameScript()
@@ -59,6 +64,7 @@ public class GameManager : MonoBehaviour {
         dialogbox.GetComponent<TextMeshProUGUI>().text = "";
         instructions.GetComponent<TextMeshProUGUI>().text = "";
         mcamera.GetComponent<FollowCam>().playerSprite = game.GetComponent<GameItems>().player;
+        lost = 0;
         gamestate = State.NEWS;
 
         // NEWS - FRIEND RUNS IN
@@ -96,6 +102,7 @@ public class GameManager : MonoBehaviour {
             yield return new WaitForSeconds(0.03f);
         }
         game.GetComponent<GameItems>().window.GetComponent<Window>().Deactivate();
+        //grip.SetActive(true);
 
         // FRIEND AND ENEMIES START RUNNING
 
@@ -143,6 +150,15 @@ public class GameManager : MonoBehaviour {
                 game.GetComponent<GameItems>().goalhouse.transform.parent = game.transform;
                 dialogbox.GetComponent<TextMeshProUGUI>().text = "We can hide here, quiet!";
             }
+
+            if (lost >= 3)
+            {
+                gamestate = State.DESPAIR;
+                dialogbox.GetComponent<TextMeshProUGUI>().text = "You lost everything! Augh!";
+                game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().Die();
+            }
+
+            //grip.GetComponent<Grip>().level = game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().pressure / 6;
         }
 
         // FRIEND IS SAFE, THEY STOP AND WAIT
@@ -157,7 +173,9 @@ public class GameManager : MonoBehaviour {
             yield return new WaitForSeconds(0.03f);
         }
 
-        // PLAYER DIED
+
+        yield return new WaitForSeconds(0.5f);
+        // PLAYER DIED?
 
         if (gamestate == State.DEAD)
         {
@@ -167,7 +185,6 @@ public class GameManager : MonoBehaviour {
         }
 
         // PLAYER MADE IT TO THE SAFEHOUSE
-
         else if (gamestate == State.WIN)
         {
             if (game.GetComponent<GameItems>().player.GetComponent<CharacterMover>().items.Count == 0)
@@ -198,6 +215,10 @@ public class GameManager : MonoBehaviour {
             {
                 dialogbox.GetComponent<TextMeshProUGUI>().text = "You saved all three treasured items!";
             }
+            instructions.GetComponent<TextMeshProUGUI>().text = "";
+            button.SetActive(true);
+        } else if (gamestate == State.DESPAIR)
+        {
             instructions.GetComponent<TextMeshProUGUI>().text = "";
             button.SetActive(true);
         }
